@@ -10,16 +10,16 @@ import (
 
 func init() {
 
-	ark.Crypto("percent", Map{
-		"name": "百分比处理", "text": "百分比处理",
-		"encode": func(value Any) Any {
+	ark.Register("percent", ark.Crypto{
+		Name: "百分比处理", Desc: "百分比处理",
+		Encode: func(value Any, setting Map) Any {
 			//text -> text
 			if vv, ok := value.(float64); ok {
 				return ark.Precision(vv/100, 4)
 			}
 			return nil
 		},
-		"decode": func(value Any) Any {
+		Decode: func(value Any, setting Map) Any {
 			//data -> text
 			if vv, ok := value.(float64); ok {
 				return ark.Precision(vv*100, 4)
@@ -28,43 +28,43 @@ func init() {
 		},
 	}, false)
 
-	ark.Crypto("text", Map{
-		"cryptos": []string{"text", "string"},
-		"name":    "文本加密", "text": "文本加密，自定义字符表的base64编码，字典：" + ark.TextAlphabet(),
-		"encode": func(value Any) Any {
+	ark.Register("text", ark.Crypto{
+		Name: "文本加密", Desc: "文本加密，自定义字符表的base64编码，字典：" + ark.TextAlphabet(),
+		Alias: []string{"text", "string"},
+		Encode: func(value Any, setting Map) Any {
 			text := util.ToString(value)
 			return ark.Encrypt(text)
 		},
-		"decode": func(value Any) Any {
+		Decode: func(value Any, setting Map) Any {
 			text := util.ToString(value)
 			return ark.Decrypt(text)
 		},
 	})
-	ark.Crypto("texts", Map{
-		"cryptos": []string{"texts", "strings"},
-		"name":    "文本数组加密", "text": "文本数组加密，自定义字符表的base64编码，字典：" + ark.TextAlphabet(),
-		"encode": func(value Any) Any {
+	ark.Register("texts", ark.Crypto{
+		Name: "文本数组加密", Desc: "文本数组加密，自定义字符表的base64编码，字典：" + ark.TextAlphabet(),
+		Alias: []string{"texts", "strings"},
+		Encode: func(value Any, setting Map) Any {
 			if vv, ok := value.([]string); ok {
 				return ark.Encrypts(vv)
 			}
 			return nil
 		},
-		"decode": func(value Any) Any {
+		Decode: func(value Any, setting Map) Any {
 			text := util.ToString(value)
 			return ark.Decrypts(text)
 		},
 	})
 
-	ark.Crypto("hash", Map{
-		"cryptos": []string{"hash", "number", "digit"},
-		"name":    "数字加密", "text": "数字加密",
-		"encode": func(value Any) Any {
+	ark.Register("hash", ark.Crypto{
+		Name: "数字加密", Desc: "数字加密",
+		Alias: []string{"hash", "number", "digit"},
+		Encode: func(value Any, setting Map) Any {
 			if vv, ok := value.(int64); ok {
 				return ark.Enhash(vv)
 			}
 			return nil
 		},
-		"decode": func(value Any) Any {
+		Decode: func(value Any, setting Map) Any {
 			if vv, ok := value.(string); ok {
 				return ark.Dehash(vv)
 			}
@@ -72,16 +72,16 @@ func init() {
 		},
 	})
 
-	ark.Crypto("hashs", Map{
-		"cryptos": []string{"hashs", "numbers", "digits"},
-		"name":    "数字数组加密", "text": "数字数组加密",
-		"encode": func(value Any) Any {
+	ark.Register("hashs", ark.Crypto{
+		Name: "数字数组加密", Desc: "数字数组加密",
+		Alias: []string{"hashs", "numbers", "digits"},
+		Encode: func(value Any, setting Map) Any {
 			if vv, ok := value.([]int64); ok {
 				return ark.Enhashs(vv)
 			}
 			return nil
 		},
-		"decode": func(value Any) Any {
+		Decode: func(value Any, setting Map) Any {
 			if vv, ok := value.(string); ok {
 				return ark.Dehashs(vv)
 			}
@@ -89,13 +89,13 @@ func init() {
 		},
 	})
 
-	ark.Crypto("base64", Map{
-		"name": "BASE64加解密", "text": "BASE64加解密",
-		"encode": func(value Any) Any {
+	ark.Register("base64", ark.Crypto{
+		Name: "BASE64加解密", Desc: "BASE64加解密",
+		Encode: func(value Any, setting Map) Any {
 			text := util.ToString(value)
 			return base64.StdEncoding.EncodeToString([]byte(text))
 		},
-		"decode": func(value Any) Any {
+		Decode: func(value Any, setting Map) Any {
 			text := util.ToString(value)
 			bytes, err := base64.StdEncoding.DecodeString(text)
 			if err == nil {

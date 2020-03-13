@@ -10,7 +10,7 @@ import (
 )
 
 //密码加密格式
-func Cipher(str string) string {
+func Hash(str string) string {
 	return Sha1(str)
 }
 

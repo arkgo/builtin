@@ -12,9 +12,9 @@ import (
 
 func init() {
 
-	ark.Type("cipher", Map{
-		"name": "密文", "text": "密文",
-		"valid": func(value Any, config Map) bool {
+	ark.Register("hash", ark.Type{
+		Name: "密文", Desc: "密文",
+		Valid: func(value Any, config Map) bool {
 			if value == nil {
 				return false
 			}
@@ -28,35 +28,35 @@ func init() {
 			}
 			return true
 		},
-		"value": func(value Any, config Map) Any {
+		Value: func(value Any, config Map) Any {
 			switch v := value.(type) {
 			case string:
-				if ark.Match(v, "cipher") {
+				if ark.Match(v, "hash") {
 					return v
 				} else {
-					return Cipher(v)
+					return Hash(v)
 				}
 			}
 			return fmt.Sprintf("%v", value)
 		},
 	}, false)
 
-	ark.Type("any", Map{
-		"name": "任意类型", "text": "任意类型",
-		"valid": func(value Any, config Map) bool {
+	ark.Register("any", ark.Type{
+		Name: "任意类型", Desc: "任意类型",
+		Valid: func(value Any, config Map) bool {
 			return true
 		},
-		"value": func(value Any, config Map) Any {
+		Value: func(value Any, config Map) Any {
 			return value
 		},
 	}, false)
 
-	ark.Type("[any]", Map{
-		"name": "Anys类型", "text": "Anys类型",
-		"valid": func(value Any, config Map) bool {
+	ark.Register("[any]", ark.Type{
+		Name: "Anys类型", Desc: "Anys类型",
+		Valid: func(value Any, config Map) bool {
 			return true
 		},
-		"value": func(value Any, config Map) Any {
+		Value: func(value Any, config Map) Any {
 			switch v := value.(type) {
 			case Any:
 				{
@@ -72,9 +72,9 @@ func init() {
 		},
 	}, false)
 
-	ark.Type("map", Map{
-		"name": "MAP类型", "text": "MAP类型",
-		"valid": func(value Any, config Map) bool {
+	ark.Register("map", ark.Type{
+		Name: "MAP类型", Desc: "MAP类型",
+		Valid: func(value Any, config Map) bool {
 			switch value.(type) {
 			case Map:
 				{
@@ -89,7 +89,7 @@ func init() {
 
 			return false
 		},
-		"value": func(value Any, config Map) Any {
+		Value: func(value Any, config Map) Any {
 			switch v := value.(type) {
 			case Map:
 				{
@@ -107,9 +107,9 @@ func init() {
 		},
 	}, false)
 
-	ark.Type("[map]", Map{
-		"name": "MAPS类型", "text": "MAPS类型",
-		"valid": func(value Any, config Map) bool {
+	ark.Register("[map]", ark.Type{
+		Name: "MAPS类型", Desc: "MAPS类型",
+		Valid: func(value Any, config Map) bool {
 			switch value.(type) {
 			case Map:
 				{
@@ -124,7 +124,7 @@ func init() {
 
 			return false
 		},
-		"value": func(value Any, config Map) Any {
+		Value: func(value Any, config Map) Any {
 			switch v := value.(type) {
 			case Map:
 				{
@@ -141,9 +141,9 @@ func init() {
 	}, false)
 
 	//---------- bool begin ----------------------------------
-	ark.Type("bool", Map{
-		"name": "布尔型", "text": "布尔型",
-		"valid": func(value Any, config Map) bool {
+	ark.Register("bool", ark.Type{
+		Name: "布尔型", Desc: "布尔型",
+		Valid: func(value Any, config Map) bool {
 
 			switch v := value.(type) {
 			case bool:
@@ -165,7 +165,7 @@ func init() {
 
 			return false
 		},
-		"value": func(value Any, config Map) Any {
+		Value: func(value Any, config Map) Any {
 
 			switch v := value.(type) {
 			case bool:
@@ -197,9 +197,9 @@ func init() {
 		},
 	}, false)
 
-	ark.Type("[bool]", Map{
-		"name": "布尔型数组", "text": "布尔型数组",
-		"valid": func(value Any, config Map) bool {
+	ark.Register("[bool]", ark.Type{
+		Name: "布尔型数组", Desc: "布尔型数组",
+		Valid: func(value Any, config Map) bool {
 
 			switch v := value.(type) {
 			case bool:
@@ -266,7 +266,7 @@ func init() {
 
 			return false
 		},
-		"value": func(value Any, config Map) Any {
+		Value: func(value Any, config Map) Any {
 
 			switch v := value.(type) {
 			case bool:
@@ -346,9 +346,9 @@ func init() {
 
 	//---------- int begin ----------------------------------
 
-	ark.Type("int", Map{
-		"name": "整型", "text": "整型",
-		"valid": func(value Any, config Map) bool {
+	ark.Register("int", ark.Type{
+		Name: "整型", Desc: "整型",
+		Valid: func(value Any, config Map) bool {
 
 			switch v := value.(type) {
 			case int, int32, int64, int8:
@@ -369,7 +369,7 @@ func init() {
 
 			return false
 		},
-		"value": func(value Any, config Map) Any {
+		Value: func(value Any, config Map) Any {
 			switch v := value.(type) {
 			case int:
 				{
@@ -410,9 +410,9 @@ func init() {
 		},
 	}, false)
 
-	ark.Type("[int]", Map{
-		"name": "整型数组", "text": "整型数组",
-		"valid": func(value Any, config Map) bool {
+	ark.Register("[int]", ark.Type{
+		Name: "整型数组", Desc: "整型数组",
+		Valid: func(value Any, config Map) bool {
 
 			switch v := value.(type) {
 			case int, int8, int16, int32, int64:
@@ -510,7 +510,7 @@ func init() {
 
 			return false
 		},
-		"value": func(value Any, config Map) Any {
+		Value: func(value Any, config Map) Any {
 
 			switch v := value.(type) {
 			case int:
@@ -687,9 +687,9 @@ func init() {
 
 	//---------- string begin ----------------------------------
 
-	ark.Type("string", Map{
-		"name": "字符串", "text": "字符串",
-		"valid": func(value Any, config Map) bool {
+	ark.Register("string", ark.Type{
+		Name: "字符串", Desc: "字符串",
+		Valid: func(value Any, config Map) bool {
 			switch v := value.(type) {
 			case string:
 				if v != "" {
@@ -707,14 +707,14 @@ func init() {
 			}
 			return false
 		},
-		"value": func(value Any, config Map) Any {
+		Value: func(value Any, config Map) Any {
 			return strings.TrimSpace(fmt.Sprintf("%v", value))
 		},
 	}, false)
 
-	ark.Type("[string]", Map{
-		"name": "字符数组", "text": "字符数组",
-		"valid": func(value Any, config Map) bool {
+	ark.Register("[string]", ark.Type{
+		Name: "字符数组", Desc: "字符数组",
+		Valid: func(value Any, config Map) bool {
 			switch value.(type) {
 			case []string:
 				//要不要判断是否为空数组
@@ -738,7 +738,7 @@ func init() {
 				return false
 			}
 		},
-		"value": func(value Any, config Map) Any {
+		Value: func(value Any, config Map) Any {
 
 			switch v := value.(type) {
 			case []string:
@@ -814,9 +814,9 @@ func init() {
 		},
 	}, false)
 
-	ark.Type("[line]", Map{
-		"name": "字符分行数组", "text": "字符分行数组",
-		"valid": func(value Any, config Map) bool {
+	ark.Register("[line]", ark.Type{
+		Name: "字符分行数组", Desc: "字符分行数组",
+		Valid: func(value Any, config Map) bool {
 			switch value.(type) {
 			case []string:
 				return true
@@ -826,7 +826,7 @@ func init() {
 				return false
 			}
 		},
-		"value": func(value Any, config Map) Any {
+		Value: func(value Any, config Map) Any {
 
 			switch v := value.(type) {
 			case []string:
@@ -865,9 +865,9 @@ func init() {
 
 	//---------- datetime begin ----------------------------------
 
-	ark.Type("date", Map{
-		"name": "日期时间", "text": "日期时间",
-		"valid": func(value Any, config Map) bool {
+	ark.Register("date", ark.Type{
+		Name: "日期时间", Desc: "日期时间",
+		Valid: func(value Any, config Map) bool {
 
 			switch v := value.(type) {
 			case time.Time:
@@ -882,7 +882,7 @@ func init() {
 
 			return false
 		},
-		"value": func(value Any, config Map) Any {
+		Value: func(value Any, config Map) Any {
 			switch v := value.(type) {
 			case int64:
 				return time.Unix(v, 0)
@@ -908,9 +908,9 @@ func init() {
 		},
 	}, false)
 
-	ark.Type("[date]", Map{
-		"name": "日期时间数组", "text": "日期时间数组",
-		"valid": func(value Any, config Map) bool {
+	ark.Register("[date]", ark.Type{
+		Name: "日期时间数组", Desc: "日期时间数组",
+		Valid: func(value Any, config Map) bool {
 
 			switch v := value.(type) {
 			case []time.Time:
@@ -923,7 +923,7 @@ func init() {
 
 			return false
 		},
-		"value": func(value Any, config Map) Any {
+		Value: func(value Any, config Map) Any {
 			switch v := value.(type) {
 			case []time.Time:
 				return v
@@ -949,9 +949,9 @@ func init() {
 		},
 	}, false)
 
-	ark.Type("datetime", Map{
-		"name": "日期时间", "text": "日期时间",
-		"valid": func(value Any, config Map) bool {
+	ark.Register("datetime", ark.Type{
+		Name: "日期时间", Desc: "日期时间",
+		Valid: func(value Any, config Map) bool {
 
 			switch v := value.(type) {
 			case time.Time:
@@ -964,7 +964,7 @@ func init() {
 
 			return false
 		},
-		"value": func(value Any, config Map) Any {
+		Value: func(value Any, config Map) Any {
 			switch v := value.(type) {
 			case time.Time:
 				return v
@@ -991,9 +991,9 @@ func init() {
 		},
 	}, false)
 
-	ark.Type("[datetime]", Map{
-		"name": "日期时间数组", "text": "日期时间数组",
-		"valid": func(value Any, config Map) bool {
+	ark.Register("[datetime]", ark.Type{
+		Name: "日期时间数组", Desc: "日期时间数组",
+		Valid: func(value Any, config Map) bool {
 
 			switch v := value.(type) {
 			case []time.Time:
@@ -1006,7 +1006,7 @@ func init() {
 
 			return false
 		},
-		"value": func(value Any, config Map) Any {
+		Value: func(value Any, config Map) Any {
 			switch v := value.(type) {
 			case []time.Time:
 				return v
@@ -1018,9 +1018,9 @@ func init() {
 		},
 	}, false)
 
-	ark.Type("timestamp", Map{
-		"name": "时间戳", "text": "时间戳",
-		"valid": func(value Any, config Map) bool {
+	ark.Register("timestamp", ark.Type{
+		Name: "时间戳", Desc: "时间戳",
+		Valid: func(value Any, config Map) bool {
 
 			switch v := value.(type) {
 			case time.Time:
@@ -1031,7 +1031,7 @@ func init() {
 
 			return false
 		},
-		"value": func(value Any, config Map) Any {
+		Value: func(value Any, config Map) Any {
 			switch v := value.(type) {
 			case time.Time:
 				return v.Unix()
@@ -1048,9 +1048,9 @@ func init() {
 		},
 	}, false)
 
-	ark.Type("[timestamp]", Map{
-		"name": "时间戳数组", "text": "时间戳数组",
-		"valid": func(value Any, config Map) bool {
+	ark.Register("[timestamp]", ark.Type{
+		Name: "时间戳数组", Desc: "时间戳数组",
+		Valid: func(value Any, config Map) bool {
 
 			switch v := value.(type) {
 			case time.Time:
@@ -1063,7 +1063,7 @@ func init() {
 
 			return false
 		},
-		"value": func(value Any, config Map) Any {
+		Value: func(value Any, config Map) Any {
 			switch v := value.(type) {
 			case time.Time:
 				return []int64{v.Unix()}
@@ -1093,9 +1093,9 @@ func init() {
 
 	//---------- enum begin ----------------------------------
 
-	ark.Type("enum", Map{
-		"name": "枚举", "text": "枚举",
-		"valid": func(value Any, config Map) bool {
+	ark.Register("enum", ark.Type{
+		Name: "枚举", Desc: "枚举",
+		Valid: func(value Any, config Map) bool {
 
 			sv := fmt.Sprintf("%v", value)
 
@@ -1108,14 +1108,14 @@ func init() {
 			}
 			return false
 		},
-		"value": func(value Any, config Map) Any {
+		Value: func(value Any, config Map) Any {
 			return fmt.Sprintf("%v", value)
 		},
 	}, false)
 
-	ark.Type("[enum]", Map{
-		"name": "枚举数组", "text": "枚举数组",
-		"valid": func(value Any, config Map) bool {
+	ark.Register("[enum]", ark.Type{
+		Name: "枚举数组", Desc: "枚举数组",
+		Valid: func(value Any, config Map) bool {
 			vals := []string{}
 			switch v := value.(type) {
 			case string:
@@ -1173,7 +1173,7 @@ func init() {
 			}
 
 		},
-		"value": func(value Any, config Map) Any {
+		Value: func(value Any, config Map) Any {
 			vals := []string{}
 
 			switch v := value.(type) {
@@ -1218,9 +1218,9 @@ func init() {
 
 	//---------- file begin ----------------------------------
 
-	ark.Type("file", Map{
-		"name": "file", "text": "file",
-		"valid": func(value Any, config Map) bool {
+	ark.Register("file", ark.Type{
+		Name: "file", Desc: "file",
+		Valid: func(value Any, config Map) bool {
 
 			switch value.(type) {
 			case Map:
@@ -1229,7 +1229,7 @@ func init() {
 
 			return false
 		},
-		"value": func(value Any, config Map) Any {
+		Value: func(value Any, config Map) Any {
 
 			switch vv := value.(type) {
 			case Map:
@@ -1239,9 +1239,9 @@ func init() {
 		},
 	}, false)
 
-	ark.Type("[file]", Map{
-		"name": "文件数组", "text": "文件数组",
-		"valid": func(value Any, config Map) bool {
+	ark.Register("[file]", ark.Type{
+		Name: "文件数组", Desc: "文件数组",
+		Valid: func(value Any, config Map) bool {
 
 			switch value.(type) {
 			case Map:
@@ -1252,7 +1252,7 @@ func init() {
 
 			return false
 		},
-		"value": func(value Any, config Map) Any {
+		Value: func(value Any, config Map) Any {
 
 			switch v := value.(type) {
 			case Map:
@@ -1268,9 +1268,9 @@ func init() {
 
 	//---------- float begin ----------------------------------
 
-	ark.Type("float", Map{
-		"name": "浮点型", "text": "布尔型",
-		"valid": func(value Any, config Map) bool {
+	ark.Register("float", ark.Type{
+		Name: "浮点型", Desc: "布尔型",
+		Valid: func(value Any, config Map) bool {
 
 			switch v := value.(type) {
 			case int, int8, int16, int32, int64:
@@ -1291,7 +1291,7 @@ func init() {
 
 			return false
 		},
-		"value": func(value Any, config Map) Any {
+		Value: func(value Any, config Map) Any {
 			switch v := value.(type) {
 			case int:
 				{
@@ -1336,9 +1336,9 @@ func init() {
 		},
 	}, false)
 
-	ark.Type("[float]", Map{
-		"name": "浮点数组", "text": "浮点数组",
-		"valid": func(value Any, config Map) bool {
+	ark.Register("[float]", ark.Type{
+		Name: "浮点数组", Desc: "浮点数组",
+		Valid: func(value Any, config Map) bool {
 
 			switch v := value.(type) {
 			case int, int8, int16, int32, int64:
@@ -1418,7 +1418,7 @@ func init() {
 
 			return false
 		},
-		"value": func(value Any, config Map) Any {
+		Value: func(value Any, config Map) Any {
 
 			switch v := value.(type) {
 			case int:
@@ -1571,9 +1571,9 @@ func init() {
 
 	//---------- image begin ----------------------------------
 
-	ark.Type("image", Map{
-		"name": "image", "text": "image",
-		"valid": func(value Any, config Map) bool {
+	ark.Register("image", ark.Type{
+		Name: "image", Desc: "image",
+		Valid: func(value Any, config Map) bool {
 
 			switch value.(type) {
 			case Map:
@@ -1582,7 +1582,7 @@ func init() {
 
 			return false
 		},
-		"value": func(value Any, config Map) Any {
+		Value: func(value Any, config Map) Any {
 
 			switch vv := value.(type) {
 			case Map:
@@ -1592,9 +1592,9 @@ func init() {
 		},
 	}, false)
 
-	ark.Type("[image]", Map{
-		"name": "image数组", "text": "image数组",
-		"valid": func(value Any, config Map) bool {
+	ark.Register("[image]", ark.Type{
+		Name: "image数组", Desc: "image数组",
+		Valid: func(value Any, config Map) bool {
 
 			switch value.(type) {
 			case Map:
@@ -1605,7 +1605,7 @@ func init() {
 
 			return false
 		},
-		"value": func(value Any, config Map) Any {
+		Value: func(value Any, config Map) Any {
 
 			switch v := value.(type) {
 			case Map:
@@ -1617,9 +1617,9 @@ func init() {
 		},
 	}, false)
 
-	ark.Type("audio", Map{
-		"name": "audio", "text": "audio",
-		"valid": func(value Any, config Map) bool {
+	ark.Register("audio", ark.Type{
+		Name: "audio", Desc: "audio",
+		Valid: func(value Any, config Map) bool {
 
 			switch value.(type) {
 			case Map:
@@ -1628,7 +1628,7 @@ func init() {
 
 			return false
 		},
-		"value": func(value Any, config Map) Any {
+		Value: func(value Any, config Map) Any {
 
 			switch vv := value.(type) {
 			case Map:
@@ -1638,9 +1638,9 @@ func init() {
 		},
 	}, false)
 
-	ark.Type("[audio]", Map{
-		"name": "audio数组", "text": "audio数组",
-		"valid": func(value Any, config Map) bool {
+	ark.Register("[audio]", ark.Type{
+		Name: "audio数组", Desc: "audio数组",
+		Valid: func(value Any, config Map) bool {
 
 			switch value.(type) {
 			case Map:
@@ -1651,7 +1651,7 @@ func init() {
 
 			return false
 		},
-		"value": func(value Any, config Map) Any {
+		Value: func(value Any, config Map) Any {
 
 			switch v := value.(type) {
 			case Map:
@@ -1663,9 +1663,9 @@ func init() {
 		},
 	}, false)
 
-	ark.Type("video", Map{
-		"name": "video", "text": "video",
-		"valid": func(value Any, config Map) bool {
+	ark.Register("video", ark.Type{
+		Name: "video", Desc: "video",
+		Valid: func(value Any, config Map) bool {
 
 			switch value.(type) {
 			case Map:
@@ -1674,7 +1674,7 @@ func init() {
 
 			return false
 		},
-		"value": func(value Any, config Map) Any {
+		Value: func(value Any, config Map) Any {
 
 			switch vv := value.(type) {
 			case Map:
@@ -1684,9 +1684,9 @@ func init() {
 		},
 	}, false)
 
-	ark.Type("[video]", Map{
-		"name": "video数组", "text": "video数组",
-		"valid": func(value Any, config Map) bool {
+	ark.Register("[video]", ark.Type{
+		Name: "video数组", Desc: "video数组",
+		Valid: func(value Any, config Map) bool {
 
 			switch value.(type) {
 			case Map:
@@ -1697,7 +1697,7 @@ func init() {
 
 			return false
 		},
-		"value": func(value Any, config Map) Any {
+		Value: func(value Any, config Map) Any {
 
 			switch v := value.(type) {
 			case Map:
@@ -1713,9 +1713,9 @@ func init() {
 
 	//---------- json begin ----------------------------------
 
-	ark.Type("json", Map{
-		"name": "JSON", "text": "JSON",
-		"valid": func(value Any, config Map) bool {
+	ark.Register("json", ark.Type{
+		Name: "JSON", Desc: "JSON",
+		Valid: func(value Any, config Map) bool {
 
 			switch v := value.(type) {
 			case Map:
@@ -1730,7 +1730,7 @@ func init() {
 
 			return false
 		},
-		"value": func(value Any, config Map) Any {
+		Value: func(value Any, config Map) Any {
 
 			switch vv := value.(type) {
 			case Map:
@@ -1746,9 +1746,9 @@ func init() {
 		},
 	}, false)
 
-	ark.Type("[json]", Map{
-		"name": "JSON数组", "text": "JSON数组",
-		"valid": func(value Any, config Map) bool {
+	ark.Register("[json]", ark.Type{
+		Name: "JSON数组", Desc: "JSON数组",
+		Valid: func(value Any, config Map) bool {
 
 			switch v := value.(type) {
 			case Map:
@@ -1767,7 +1767,7 @@ func init() {
 
 			return false
 		},
-		"value": func(value Any, config Map) Any {
+		Value: func(value Any, config Map) Any {
 
 			switch v := value.(type) {
 			case Map:

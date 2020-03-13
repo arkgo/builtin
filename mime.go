@@ -7,7 +7,7 @@ import (
 
 func init() {
 
-	ark.Mime(Map{
+	mimes := Map{
 		"text":   "text/explain",
 		"html":   "text/html",
 		"xml":    "text/xml",
@@ -213,6 +213,19 @@ func init() {
 		"zip":     "application/zip",
 		"":        "application/octet-stream",
 		"*":       "application/octet-stream",
-	}, false)
+	}
+
+	for k, v := range mimes {
+		mime := ark.Mime{
+			Name: k, Desc: k,
+		}
+		if vv, ok := v.(string); ok {
+			mime.Type = vv
+		}
+		if vv, ok := v.([]string); ok {
+			mime.Types = vv
+		}
+		ark.Register(k, mime, false)
+	}
 
 }

@@ -7,7 +7,7 @@ import (
 
 func init() {
 
-	ark.Regular(Map{
+	regulars := Map{
 		"hash":   `^[0-9A-Fa-f]{40}$`,
 		"number": `^[0-9]+$`,
 		"float":  `^[0-9]+$`,
@@ -33,6 +33,19 @@ func init() {
 			"^asdfasfasf$",
 		},
 		"test": `^test$`,
-	}, false)
+	}
+
+	for k, v := range regulars {
+		regular := ark.Regular{
+			Name: k, Desc: k,
+		}
+		if vv, ok := v.(string); ok {
+			regular.Expression = vv
+		}
+		if vv, ok := v.([]string); ok {
+			regular.Expressions = vv
+		}
+		ark.Register(k, regular, false)
+	}
 
 }

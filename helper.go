@@ -13,23 +13,23 @@ import (
 
 func init() {
 
-	ark.Helper("hashid", Map{
-		"name": "hashid", "text": "hashid",
-		"action": func(val int64) string {
+	ark.Register("hashid", ark.Helper{
+		Name: "hashid", Desc: "hashid",
+		Action: func(val int64) string {
 			return ark.Enhash(val)
 		},
 	}, false)
 
-	ark.Helper("percent", Map{
-		"name": "百分比", "text": "百分比",
-		"action": func(val float64) string {
+	ark.Register("percent", ark.Helper{
+		Name: "百分比", Desc: "百分比",
+		Action: func(val float64) string {
 			return fmt.Sprintf("%.2f", val*float64(100))
 		},
 	}, false)
 
-	ark.Helper("round", Map{
-		"name": "四舍六入", "text": "四舍六入",
-		"action": func(val float64, precisions ...Any) string {
+	ark.Register("round", ark.Helper{
+		Name: "四舍六入", Desc: "四舍六入",
+		Action: func(val float64, precisions ...Any) string {
 			precision := 2
 
 			if len(precisions) > 0 {
@@ -53,9 +53,9 @@ func init() {
 		},
 	}, false)
 
-	ark.Helper("raw", Map{
-		"name": "原始输出", "text": "原始输出",
-		"action": func(sss Any) template.HTML {
+	ark.Register("raw", ark.Helper{
+		Name: "原始输出", Desc: "原始输出",
+		Action: func(sss Any) template.HTML {
 			if sss != nil {
 				return template.HTML(fmt.Sprintf("%v", sss))
 			}
@@ -63,9 +63,9 @@ func init() {
 		},
 	}, false)
 
-	ark.Helper("html", Map{
-		"name": "输出HTML", "text": "输出HTML，和raw一个意思",
-		"action": func(sss Any) template.HTML {
+	ark.Register("html", ark.Helper{
+		Name: "输出HTML", Desc: "输出HTML，和raw一个意思",
+		Action: func(sss Any) template.HTML {
 			if sss != nil {
 				return template.HTML(fmt.Sprintf("%v", sss))
 			}
@@ -73,9 +73,9 @@ func init() {
 		},
 	}, false)
 
-	ark.Helper("attr", Map{
-		"name": "HTML属性输出", "text": "HTML属性输出，因为GO模板会自动转义html",
-		"action": func(text Any) template.HTMLAttr {
+	ark.Register("attr", ark.Helper{
+		Name: "HTML属性输出", Desc: "HTML属性输出，因为GO模板会自动转义html",
+		Action: func(text Any) template.HTMLAttr {
 			if text != nil {
 				return template.HTMLAttr(fmt.Sprintf("%v", text))
 			}
@@ -83,9 +83,9 @@ func init() {
 		},
 	}, false)
 
-	ark.Helper("url", Map{
-		"name": "Url输出", "text": "Url输出，因为GO模板会自动转义html",
-		"action": func(text Any) template.URL {
+	ark.Register("url", ark.Helper{
+		Name: "Url输出", Desc: "Url输出，因为GO模板会自动转义html",
+		Action: func(text Any) template.URL {
 			if text != nil {
 				return template.URL(fmt.Sprintf("%v", text))
 			}
@@ -93,9 +93,9 @@ func init() {
 		},
 	}, false)
 
-	ark.Helper("join", Map{
-		"name": "数组join输出", "text": "数组join输出",
-		"action": func(a Any, s string) template.HTML {
+	ark.Register("join", ark.Helper{
+		Name: "数组join输出", Desc: "数组join输出",
+		Action: func(a Any, s string) template.HTML {
 			strs := []string{}
 
 			if a != nil {
@@ -145,9 +145,9 @@ func init() {
 		},
 	}, false)
 
-	ark.Helper("json", Map{
-		"name": "json输出", "text": "json输出",
-		"action": func(data Any) template.HTML {
+	ark.Register("json", ark.Helper{
+		Name: "json输出", Desc: "json输出",
+		Action: func(data Any) template.HTML {
 			if data != nil {
 				bytes, err := ark.Marshal(data)
 				if err == nil {
@@ -158,9 +158,9 @@ func init() {
 		},
 	}, false)
 
-	ark.Helper("mapping", Map{
-		"name": "生成Map", "text": "生成Map",
-		"action": func(args ...Any) Map {
+	ark.Register("mapping", ark.Helper{
+		Name: "生成Map", Desc: "生成Map",
+		Action: func(args ...Any) Map {
 			m := Map{}
 
 			k := ""
@@ -176,16 +176,16 @@ func init() {
 		},
 	}, false)
 
-	ark.Helper("now", Map{
-		"name": "当前时间", "text": "当前时间",
-		"action": func() time.Time {
+	ark.Register("now", ark.Helper{
+		Name: "当前时间", Desc: "当前时间",
+		Action: func() time.Time {
 			return time.Now()
 		},
 	}, false)
 
-	ark.Helper("in", Map{
-		"name": "判断某个值是否在数组", "text": "判断某个值是否在数组",
-		"action": func(val Any, arrs ...Any) bool {
+	ark.Register("in", ark.Helper{
+		Name: "判断某个值是否在数组", Desc: "判断某个值是否在数组",
+		Action: func(val Any, arrs ...Any) bool {
 
 			strVal := fmt.Sprintf("%v", val)
 			strArr := []string{}
@@ -241,9 +241,9 @@ func init() {
 		},
 	}, false)
 
-	ark.Helper("out", Map{
-		"name": "输出输组某下标元素", "text": "输出输组某下标元素",
-		"action": func(arr Any, i int) string {
+	ark.Register("out", ark.Helper{
+		Name: "输出输组某下标元素", Desc: "输出输组某下标元素",
+		Action: func(arr Any, i int) string {
 
 			strArr := []string{}
 
