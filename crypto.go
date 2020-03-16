@@ -4,8 +4,8 @@ import (
 	"encoding/base64"
 
 	"github.com/arkgo/ark"
+	. "github.com/arkgo/asset"
 	"github.com/arkgo/asset/util"
-	. "github.com/arkgo/base"
 )
 
 func init() {
