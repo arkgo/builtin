@@ -13,6 +13,9 @@ func init() {
 
 	ark.Sites.Register("_doc_", ark.Router{
 		Uri: "/_doc_", Name: "系统文档", Desc: "系统文档",
+		Args: Vars{
+			"p": ark.Define("string", false, "path"),
+		},
 		Setting: Map{"passport": true},
 		Action: func(ctx *ark.Http) {
 			ctx.Data["cryptos"] = ark.Cryptos()

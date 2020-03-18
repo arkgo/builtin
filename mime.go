@@ -10,8 +10,8 @@ func init() {
 	mimes := Map{
 		"text":   "text/explain",
 		"html":   "text/html",
-		"xml":    "text/xml",
-		"json":   "text/json",
+		"xml":    "application/xml",
+		"json":   "application/json",
 		"file":   "application/octet-stream",
 		"down":   "application/octet-stream",
 		"script": "text/html",
