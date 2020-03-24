@@ -11,7 +11,7 @@ import (
 
 func init() {
 
-	ark.Sites.Register("_doc_", ark.Router{
+	ark.Register("*._doc_", ark.Router{
 		Uri: "/_doc_", Name: "系统文档", Desc: "系统文档",
 		Args: Vars{
 			"p": ark.Define("string", false, "path"),
