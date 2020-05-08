@@ -797,7 +797,11 @@ func init() {
 					return []string{}
 
 				} else {
-					return []string{v}
+					if strings.Contains(v, "\n") {
+						return strings.Split(v, "\n")
+					} else {
+						return []string{v}
+					}
 				}
 
 			/*
