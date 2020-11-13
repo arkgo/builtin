@@ -448,8 +448,8 @@ func init() {
 							return false
 						}
 					}
-					return true
 				}
+				return true
 			case string:
 				{
 
