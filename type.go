@@ -437,8 +437,8 @@ func init() {
 								return false
 							}
 						}
-						return true
 					}
+					return true
 				}
 			case []Any:
 				if len(v) > 0 {
