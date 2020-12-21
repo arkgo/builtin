@@ -429,12 +429,13 @@ func init() {
 				return true
 			case []string:
 				{
-
 					if len(v) > 0 {
 						for _, sv := range v {
 							sv = strings.TrimSpace(sv)
-							if _, e := strconv.ParseInt(sv, 10, 64); e != nil {
-								return false
+							if sv != "" {
+								if _, e := strconv.ParseInt(sv, 10, 64); e != nil {
+									return false
+								}
 							}
 						}
 					}
@@ -444,8 +445,10 @@ func init() {
 				if len(v) > 0 {
 					for _, av := range v {
 						sv := strings.TrimSpace(fmt.Sprintf("%v", av))
-						if _, e := strconv.ParseInt(sv, 10, 64); e != nil {
-							return false
+						if sv != "" {
+							if _, e := strconv.ParseInt(sv, 10, 64); e != nil {
+								return false
+							}
 						}
 					}
 				}
@@ -598,8 +601,10 @@ func init() {
 					arr := []int64{}
 					for _, sv := range v {
 						sv = strings.TrimSpace(sv)
-						if iv, e := strconv.ParseInt(sv, 10, 64); e == nil {
-							arr = append(arr, iv)
+						if sv != "" {
+							if iv, e := strconv.ParseInt(sv, 10, 64); e == nil {
+								arr = append(arr, iv)
+							}
 						}
 					}
 
@@ -610,8 +615,10 @@ func init() {
 					arr := []int64{}
 					for _, av := range v {
 						sv := strings.TrimSpace(fmt.Sprintf("%v", av))
-						if iv, e := strconv.ParseInt(sv, 10, 64); e == nil {
-							arr = append(arr, int64(iv))
+						if sv != "" {
+							if iv, e := strconv.ParseInt(sv, 10, 64); e == nil {
+								arr = append(arr, int64(iv))
+							}
 						}
 					}
 
@@ -619,7 +626,6 @@ func init() {
 				}
 			case string:
 				{
-
 					if (strings.HasPrefix(v, "{") && strings.HasSuffix(v, "}")) ||
 						(strings.HasPrefix(v, "[") && strings.HasSuffix(v, "]")) {
 
