@@ -10,6 +10,11 @@ import (
 	. "github.com/arkgo/asset"
 )
 
+//test
+//asdf
+//asasdf
+//asfsadf
+
 func init() {
 
 	ark.Register("hash", ark.Type{
@@ -1372,8 +1377,8 @@ func init() {
 								return false
 							}
 						}
-						return true
 					}
+					return true
 				}
 			case []Any:
 				{
@@ -1384,8 +1389,8 @@ func init() {
 								return false
 							}
 						}
-						return true
 					}
+					return true
 				}
 			case string:
 				{
